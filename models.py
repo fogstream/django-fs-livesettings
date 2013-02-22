@@ -19,6 +19,15 @@ class Setting(models.Model):
         (TYPE_URL, 'url'),
     )
 
+    TYPE_FIELD = {
+        TYPE_BOOLEAN: models.BooleanField(),
+        TYPE_CHAR: models.CharField(),
+        TYPE_DATE: models.DateField(),
+        TYPE_EMAIL: models.EmailField(),
+        TYPE_INTEGER: models.IntegerField(),
+        TYPE_URL: models.URLField(),
+    }
+
     type = models.CharField(verbose_name=u'type', max_length=1, choices=TYPE_CHOICES)
     key = models.CharField(verbose_name=u'key', max_length=100, unique=True)
     value = models.CharField(verbose_name=u'value', max_length=500, null=True, blank=True)
@@ -32,20 +41,7 @@ class Setting(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(Setting, self).__init__(*args, **kwargs)
-        if self.type == self.TYPE_BOOLEAN:
-            self.field = models.BooleanField()
-        elif self.type == self.TYPE_CHAR:
-            self.field = models.CharField()
-        elif self.type == self.TYPE_DATE:
-            self.field = models.DateField()
-        elif self.type == self.TYPE_EMAIL:
-            self.field = models.EmailField()
-        elif self.type == self.TYPE_INTEGER:
-            self.field = models.IntegerField()
-        elif self.type == self.TYPE_URL:
-            self.field = models.URLField()
-        else:
-            self.field = models.CharField()
+        self.field = self.TYPE_FIELD.get(self.type, models.CharField())
 
     @property
     def get_value(self):
