@@ -3,8 +3,8 @@
 from django.db.utils import DatabaseError
 from django.db import connections
 
-from . import settings as _settings
-from . import models as _models
+from livesettings import settings as _settings
+from livesettings import models as _models
 
 
 def model_installed(model):
