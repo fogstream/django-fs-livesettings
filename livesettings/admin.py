@@ -2,8 +2,8 @@
 
 from django.contrib import admin
 
-from . import models as _models
-from . import forms as _forms
+from livesettings import models as _models
+from livesettings import forms as _forms
 
 
 class SettingAdmin(admin.ModelAdmin):

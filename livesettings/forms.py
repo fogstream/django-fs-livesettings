@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.admin import widgets as admin_widgets
 from django.forms import widgets
 
-from . import models as _models
+from livesettings import models as _models
 
 
 class SettingAdminForm(forms.ModelForm):
