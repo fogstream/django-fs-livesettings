@@ -1,8 +1,5 @@
 # coding=utf-8
 
-from livesettings import signals
-
-from django.db.utils import DatabaseError
 from django.db import connections
 
 from livesettings import settings as _settings
