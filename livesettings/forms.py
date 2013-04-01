@@ -23,5 +23,5 @@ class SettingAdminForm(forms.ModelForm):
 
     def clean_value(self):
         value = self.cleaned_data['value']
-        self.instance.field.clean(value, None)
+        self.instance.field.clean(value)
         return value

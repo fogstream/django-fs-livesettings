@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from django.db import models
+from django.forms import fields
 
 
 class Setting(models.Model):
@@ -20,12 +21,12 @@ class Setting(models.Model):
     )
 
     TYPE_FIELD = {
-        TYPE_BOOLEAN: models.BooleanField(),
-        TYPE_CHAR: models.CharField(),
-        TYPE_DATE: models.DateField(),
-        TYPE_EMAIL: models.EmailField(),
-        TYPE_INTEGER: models.IntegerField(),
-        TYPE_URL: models.URLField(),
+        TYPE_BOOLEAN: fields.BooleanField(),
+        TYPE_CHAR: fields.CharField(),
+        TYPE_DATE: fields.DateField(),
+        TYPE_EMAIL: fields.EmailField(),
+        TYPE_INTEGER: fields.IntegerField(),
+        TYPE_URL: fields.URLField(),
     }
 
     type = models.CharField(verbose_name=u'type', max_length=1, choices=TYPE_CHOICES)
