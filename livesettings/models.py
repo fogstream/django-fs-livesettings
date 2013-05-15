@@ -3,6 +3,7 @@
 from django.db import models
 
 from livesettings import types as _types
+from livesettings import settings as _settings
 
 
 class Setting(models.Model):
@@ -29,3 +30,21 @@ class Setting(models.Model):
     def clean_value(self, value):
         field = self._get_field()
         return field.clean(value)
+
+
+def init_livesettings():
+    keys = []
+    for conf_item in _settings.CONF:
+        key = conf_item[0]
+        setting, created = Setting.objects.get_or_create(key=key)
+        type = conf_item[1]
+        assert type in _types.TYPES
+        if setting.type != type:
+            setting.type = type
+            setting.value = None
+            setting.save()
+        keys.append(key)
+    Setting.objects.exclude(key__in=keys).delete()
+
+
+init_livesettings()

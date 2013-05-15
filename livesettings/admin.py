@@ -2,10 +2,8 @@
 
 from django.contrib import admin
 
-from livesettings import types as _types
 from livesettings import models as _models
 from livesettings import forms as _forms
-from livesettings import settings as _settings
 
 
 class SettingAdmin(admin.ModelAdmin):
@@ -14,21 +12,6 @@ class SettingAdmin(admin.ModelAdmin):
     readonly_fields = ('key', 'type')
     form = _forms.SettingAdminForm
     actions = None
-
-    def __init__(self, model, admin_site):
-        super(SettingAdmin, self).__init__(model, admin_site)
-        keys = []
-        for conf_item in _settings.CONF:
-            key = conf_item[0]
-            setting, created = _models.Setting.objects.get_or_create(key=key)
-            type = conf_item[1]
-            assert type in _types.TYPES
-            if setting.type != type:
-                setting.type = type
-                setting.value = None
-                setting.save()
-            keys.append(key)
-        _models.Setting.objects.exclude(key__in=keys).delete()
 
     def has_add_permission(self, request):
         return False
