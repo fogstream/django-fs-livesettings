@@ -8,8 +8,11 @@ from livesettings import types as _types
 class SettingAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SettingAdminForm, self).__init__(*args, **kwargs)
-        self.fields['value'].widget = _types.TYPE_WIDGET.get(self.instance.type)
-
-    def clean_value(self):
-        value = self.cleaned_data['value']
-        return self.instance.clean_value(value)
+        value_field = self.fields['value']
+        kwargs = {
+            'required': value_field.required,
+            'label': value_field.label,
+            'help_text': value_field.help_text,
+            'widget': _types.TYPE_WIDGET.get(self.instance.type),
+        }
+        self.fields['value'] = _types.TYPE_FIELD.get(self.instance.type)(**kwargs)

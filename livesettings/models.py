@@ -1,8 +1,14 @@
 # coding=utf-8
 
+import re
+
 from django.db import models
+from django.db.utils import DatabaseError
+
+from picklefield import fields as picklefield_fields
 
 from livesettings import types as _types
+from livesettings import settings as _settings
 
 
 class Setting(models.Model):
@@ -10,7 +16,7 @@ class Setting(models.Model):
 
     key = models.CharField(verbose_name=u'key', max_length=50, unique=True)
     type = models.CharField(verbose_name=u'type', max_length=50, choices=TYPE_CHOICES)
-    value = models.CharField(verbose_name=u'value', max_length=500, null=True, blank=True)
+    value = picklefield_fields.PickledObjectField(verbose_name=u'value', editable=True, blank=True, null=True)
 
     class Meta:
         verbose_name = u'setting'
@@ -19,13 +25,27 @@ class Setting(models.Model):
     def __unicode__(self):
         return self.key
 
-    def _get_field(self):
-        return _types.TYPE_FIELD.get(self.type)
 
-    def get_value(self):
-        field = self._get_field()
-        return field.to_python(self.value)
+key_re = re.compile(r'^[a-zA-Z0-9_]+$')
 
-    def clean_value(self, value):
-        field = self._get_field()
-        return field.clean(value)
+
+def fill_in_settings():
+    try:
+        Setting.objects.count()
+    except DatabaseError:
+        return
+    keys = []
+    for key, type in _settings.CONFIG.iteritems():
+        if (not key_re.match(key)) or (type not in _types.TYPES):
+            from django.core.exceptions import ImproperlyConfigured
+            raise ImproperlyConfigured('LiveSettings is improperly configured.')
+        setting, created = Setting.objects.get_or_create(key=key)
+        if setting.type != type:
+            setting.type = type
+            setting.value = None
+            setting.save()
+        keys.append(key)
+    Setting.objects.exclude(key__in=keys).delete()
+
+
+fill_in_settings()
