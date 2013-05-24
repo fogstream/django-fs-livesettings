@@ -40,7 +40,7 @@ TYPE_FIELD = {
     TYPE_DATETIME: fields.SplitDateTimeField,
     TYPE_DECIMAL: fields.DecimalField,
     TYPE_EMAIL: fields.EmailField,
-    TYPE_FILE: fields.EmailField,
+    TYPE_FILE: fields.FileField,
     TYPE_IMAGE: fields.ImageField,
     TYPE_INTEGER: fields.IntegerField,
     TYPE_TIME: fields.TimeField,
