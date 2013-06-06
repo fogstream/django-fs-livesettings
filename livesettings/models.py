@@ -3,6 +3,7 @@
 import re
 
 from django.db import models
+from django.db import connection
 from django.db.utils import DatabaseError
 
 from picklefield import fields as picklefield_fields
@@ -33,6 +34,7 @@ def fill_in_settings():
     try:
         Setting.objects.count()
     except DatabaseError:
+        connection._rollback()
         return
     keys = []
     for key, type in _settings.CONFIG.iteritems():
