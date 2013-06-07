@@ -32,7 +32,7 @@ key_re = re.compile(r'^[a-zA-Z0-9_]+$')
 
 def fill_in_settings():
     try:
-        Setting.objects.count()
+        Setting.objects.exists()
     except DatabaseError:
         connection._rollback()
         return
