@@ -7,7 +7,7 @@ django-livesettings is the Django-related reusable app provides the ability to s
 Installation
 ============
 
-1. Install django-livesettings using ``pip`` or ``easy_install``::
+1. Install ``fogstream-livesettings`` using ``pip`` or ``easy_install``::
 
     $ pip install django-livesettings
 
