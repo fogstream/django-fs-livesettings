@@ -7,9 +7,9 @@ from livesettings import forms as _forms
 
 
 class SettingAdmin(admin.ModelAdmin):
-    list_display = ('key', 'type', 'value')
-    fields = ('key', 'type', 'value')
-    readonly_fields = ('key', 'type')
+    list_display = ('key', 'tpe', 'value', 'description')
+    fields = ('key', 'tpe', 'value', 'description')
+    readonly_fields = ('key', 'tpe', 'description')
     actions = None
     form = _forms.SettingAdminForm
 
