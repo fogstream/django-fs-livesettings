@@ -13,6 +13,6 @@ class SettingAdminForm(forms.ModelForm):
             'required': value_field.required,
             'label': value_field.label,
             'help_text': value_field.help_text,
-            'widget': _types.TYPE_WIDGET.get(self.instance.type),
+            'widget': _types.TYPE_WIDGET.get(self.instance.tpe),
         }
-        self.fields['value'] = _types.TYPE_FIELD.get(self.instance.type)(**kwargs)
+        self.fields['value'] = _types.TYPE_FIELD.get(self.instance.tpe)(**kwargs)
