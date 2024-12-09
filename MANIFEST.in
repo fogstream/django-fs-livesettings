@@ -1,2 +1,2 @@
-include *.txt
+include LICENSE README.rst
 recursive-include livesettings *

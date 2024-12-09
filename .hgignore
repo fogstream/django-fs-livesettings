@@ -1,5 +1,0 @@
-\.pyc$
-\.pyo$
-^\.idea/
-^dist/
-^.*\.egg-info/

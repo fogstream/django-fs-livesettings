@@ -49,7 +49,7 @@ Usage
 Just import livesttings and call that setting you want::
 
     from livesettings.conf import livesettings
-    print livesettings.MY_SETTING_1
+    print(livesettings.MY_SETTING_1)
 
 
 Credits

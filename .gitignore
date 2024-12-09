@@ -1,0 +1,14 @@
+*.log
+*.pot
+*.pyc
+*.pyo
+__pycache__
+.idea
+.env
+venv
+celerybeat-schedule
+.DS_Store
+compose.yaml
+volumes
+dist
+*.egg-info

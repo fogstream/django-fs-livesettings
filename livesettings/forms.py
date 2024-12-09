@@ -1,13 +1,14 @@
-# coding=utf-8
-
 from django import forms
 
 from livesettings import types as _types
 
 
 class SettingAdminForm(forms.ModelForm):
+    """
+    """
+
     def __init__(self, *args, **kwargs):
-        super(SettingAdminForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         value_field = self.fields['value']
         kwargs = {
             'required': value_field.required,
